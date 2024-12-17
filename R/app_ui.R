@@ -10,7 +10,35 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      h1("DREAMSsatcalc")
+      #theme = theme,
+      navbarPage(
+        title = span(
+          "DREAMS Saturation Calculator"
+        ),
+        collapsible = TRUE,
+        tabPanel(
+          title = "Start Here",
+          mod_start_ui("start_tab")
+        ),
+        tabPanel(
+          title = "National-level Estimator",
+          mod_national_ui("nat-estimate_tab")
+        ),
+        tabPanel(
+          title = "DSNU-level Estimator",
+          mod_dsnu_ui("dsnu-estimate_tab")
+        ),
+        tabPanel(
+          title = "About",
+          column(10,
+                 offset = 1,
+                 shinydashboard::box(
+                   width = NULL, status = "primary"
+                   #includeMarkdown(normalizePath("inst/app/www/rmd/about.md"))
+                 )
+          )
+        )
+      )
     )
   )
 }
@@ -34,7 +62,10 @@ golem_add_external_resources <- function() {
     bundle_resources(
       path = app_sys("app/www"),
       app_title = "DREAMSsatcalc"
-    )
+    ),
+    shinyjs::useShinyjs(),
+    shinyWidgets::useShinydashboard(),
+    shinyWidgets::setBackgroundColor(color = "#faf9f0")
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert()
   )
